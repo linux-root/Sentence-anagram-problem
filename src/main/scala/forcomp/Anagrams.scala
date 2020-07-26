@@ -92,22 +92,18 @@ object Anagrams extends AnagramsInterface {
    * in the example above could have been displayed in some other order.
    */
   def combinations(occurrences: Occurrences): List[Occurrences] = {
-    def removeZero(occurrences: Occurrences): Occurrences = {
+     def removeZero(occurrences: Occurrences): Occurrences = {
       occurrences.filter { case (ch, freq) => freq != 0 }
     }
 
-
-    def combine(occurrences: Occurrences) : List[Occurrences] = {
-      if (occurrences.isEmpty) {
-        List(Occurrences.empty) // Set contains 1 empty Occurrences
+    if (occurrences.isEmpty) {
+        List(Occurrences.empty) // a List containing 1 empty Occurrences
       } else {
         val (headChar, headFrequency) = occurrences.head
         for {i <- 0 to headFrequency
              tailCombine <- combinations(occurrences.tail)
              } yield removeZero((headChar, i) :: tailCombine)
-      }.toList
-    }
-    combine(occurrences)
+    }.toList
   }
 
 
@@ -175,7 +171,7 @@ object Anagrams extends AnagramsInterface {
           combination <- combinations(occurrences)
           word <- dictionaryByOccurrences(combination)
           rest <- loop(subtract(occurrences, combination))
-        } yield word :: rest // yield Sentence from word and rest
+        } yield word :: rest // yield a Sentence from word and rest
       }
     }
 
